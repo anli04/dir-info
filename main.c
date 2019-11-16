@@ -30,8 +30,8 @@ long int dirFunc(DIR * d, char * path){
   long int tsize = 0;
   while (p){
     printf("Name: %-20s | ", p->d_name);
-    if (p->d_type == 4) printf("Type: directory \t\t| ");
-    else printf("Type: regular file \t\t| ");
+    if (p->d_type == 4) printf("Type: %-20s | ", "directory");
+    else printf("Type: %-20s | ", "regular file");
     struct stat f;
     char s[256];
     strcpy(s, path);
