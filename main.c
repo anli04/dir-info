@@ -16,7 +16,7 @@ int main(){
     printf("Name: %s. Type: %d. ", p->d_name, p->d_type);
     struct stat f;
     char s[] = "Test/";
-    stat(*strcat(s, p->d_name), &f);
+    stat(strcat(s, p->d_name), &f);
     printf("Size: %ld.\n", f.st_size);
     p = readdir(d);
   }
