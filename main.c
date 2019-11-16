@@ -18,7 +18,7 @@ int main(){
   char path[] = "Test/";
   long int tsize = dirFunc(d, path);
   closedir(d);
-  printf("\nTotal Size: ");
+  printf("\nTotal Size (not including directories): ");
   printSize(tsize);
   return 0;
 }
@@ -29,7 +29,7 @@ long int dirFunc(DIR * d, char * path){
   if (errno) printf("Error: %d - %s\n", errno, strerror(errno));
   long int tsize = 0;
   while (p){
-    printf("Name: %s \t\t| ", p->d_name);
+    printf("Name: %-20s | ", p->d_name);
     if (p->d_type == 4) printf("Type: directory \t\t| ");
     else printf("Type: regular file \t\t| ");
     struct stat f;
