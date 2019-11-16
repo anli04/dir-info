@@ -21,6 +21,7 @@ int main(){
 int dirFunc(DIR * d, char * path){
   struct dirent *p;
   p = readdir(d);
+  if (errno) printf("Error: %d - %s\n", errno, strerror(errno));
   long int tsize = 0;
   while (p){
     printf("Name: %s. Type: %d. ", p->d_name, p->d_type);
@@ -28,10 +29,12 @@ int dirFunc(DIR * d, char * path){
     char s[256];
     strcpy(s, path);
     stat(strcat(s, p->d_name), &f);
+    if (errno) printf("Error: %d - %s\n", errno, strerror(errno));
     printf("Size: %ld.\n", f.st_size);
-    if (p->d_type != 4 && strncmp(p->d_name, ".", 1) != 0) tsize += f.st_size;
+    if (p->d_type != 4 || strncmp(p->d_name, ".", 1) == 0) tsize += f.st_size;
     else {
       DIR * d2 = opendir(s);
+      if (errno) printf("Error: %d - %s\n", errno, strerror(errno));
       tsize += dirFunc(d2, s);
       closedir(d2);
     }
