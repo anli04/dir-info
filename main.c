@@ -29,9 +29,9 @@ long int dirFunc(DIR * d, char * path){
   if (errno) printf("Error: %d - %s\n", errno, strerror(errno));
   long int tsize = 0;
   while (p){
-    printf("Name: %s | ", p->d_name);
-    if (p->d_type == 4) printf("Type: directory | ");
-    else printf("Type: regular file | ");
+    printf("Name: %s \t\t| ", p->d_name);
+    if (p->d_type == 4) printf("Type: directory \t\t| ");
+    else printf("Type: regular file \t\t| ");
     struct stat f;
     char s[256];
     strcpy(s, path);
