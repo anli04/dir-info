@@ -7,7 +7,7 @@
 #include <sys/types.h>
 #include <errno.h>
 
-int dirFunc(DIR * d, char * path);
+long int dirFunc(DIR * d, char * path);
 
 int main(){
   DIR * d = opendir("Test");
@@ -15,10 +15,11 @@ int main(){
   char path[] = "Test/";
   int tsize = dirFunc(d, path);
   closedir(d);
+  printf("\nTotal Size: %ld", tsize);
   return 0;
 }
 
-int dirFunc(DIR * d, char * path){
+long int dirFunc(DIR * d, char * path){
   struct dirent *p;
   p = readdir(d);
   if (errno) printf("Error: %d - %s\n", errno, strerror(errno));
@@ -35,6 +36,8 @@ int dirFunc(DIR * d, char * path){
     else {
       DIR * d2 = opendir(s);
       if (errno) printf("Error: %d - %s\n", errno, strerror(errno));
+      strcpy(s, p->d_name);
+      strcat(s, "/");
       tsize += dirFunc(d2, s);
       closedir(d2);
     }
