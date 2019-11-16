@@ -29,7 +29,7 @@ int dirFunc(DIR * d, char * path){
     strcpy(s, path);
     stat(strcat(s, p->d_name), &f);
     printf("Size: %ld.\n", f.st_size);
-    if (p->d_type != 4) tsize += f.st_size;
+    if (p->d_type != 4 && strcmp(p->d_name, ".") != 0) tsize += f.st_size;
     else {
       DIR * d2 = opendir(s);
       tsize += dirFunc(d2, s);
