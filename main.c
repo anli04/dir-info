@@ -11,6 +11,7 @@ long int dirFunc(DIR * d, char * path);
 void printSize(long int size);
 
 int main(){
+  printf("Note: \"Readable format\" truncates the bytes when converting\n\n");
   DIR * d = opendir("Test");
   if (errno) printf("Error: %d - %s\n", errno, strerror(errno));
   char path[] = "Test/";
