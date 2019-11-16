@@ -8,14 +8,16 @@
 #include <errno.h>
 
 long int dirFunc(DIR * d, char * path);
+void printSize(long int size);
 
 int main(){
   DIR * d = opendir("Test");
   if (errno) printf("Error: %d - %s\n", errno, strerror(errno));
   char path[] = "Test/";
-  int tsize = dirFunc(d, path);
+  long int tsize = dirFunc(d, path);
   closedir(d);
-  printf("\nTotal Size: %ld", tsize);
+  printf("\nTotal Size: ");
+  printSize(tsize);
   return 0;
 }
 
@@ -29,14 +31,15 @@ long int dirFunc(DIR * d, char * path){
     struct stat f;
     char s[256];
     strcpy(s, path);
-    stat(strcat(s, p->d_name), &f);
+    strcat(s, p->d_name);
+    stat(s, &f);
     if (errno) printf("Error: %d - %s\n", errno, strerror(errno));
-    printf("Size: %ld.\n", f.st_size);
+    printf("Size: ");
+    printSize(f.st_size);
     if (p->d_type != 4 || strncmp(p->d_name, ".", 1) == 0) tsize += f.st_size;
     else {
       DIR * d2 = opendir(s);
       if (errno) printf("Error: %d - %s\n", errno, strerror(errno));
-      strcpy(s, p->d_name);
       strcat(s, "/");
       tsize += dirFunc(d2, s);
       closedir(d2);
@@ -44,4 +47,12 @@ long int dirFunc(DIR * d, char * path){
     p = readdir(d);
   }
   return tsize;
+}
+
+void printSize(long int size){
+  if (size > 1000000000000) printf("%ld TB\n", size / 1000000000000);
+  else if (size > 1000000000) printf("%ld GB\n", size / 1000000000);
+  else if (size > 1000000) printf("%ld MB\n", size / 1000000);
+  else if (size > 1000) printf("%ld KB\n", size / 1000);
+  else printf("%ld B\n",size);
 }
