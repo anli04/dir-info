@@ -12,6 +12,7 @@ void printSize(long int size);
 
 int main(){
   printf("Note: \"Readable format\" truncates the bytes when converting\n\n");
+  printf("Statistics for directory \"Test\"\n");
   DIR * d = opendir("Test");
   if (errno) printf("Error: %d - %s\n", errno, strerror(errno));
   char path[] = "Test/";
@@ -28,7 +29,9 @@ long int dirFunc(DIR * d, char * path){
   if (errno) printf("Error: %d - %s\n", errno, strerror(errno));
   long int tsize = 0;
   while (p){
-    printf("Name: %s. Type: %d. ", p->d_name, p->d_type);
+    printf("Name: %s | ", p->d_name);
+    if (p->d_type == 4) printf("Type: directory | ");
+    else printf("Type: regular file | ");
     struct stat f;
     char s[256];
     strcpy(s, path);
