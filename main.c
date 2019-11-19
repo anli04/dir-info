@@ -12,14 +12,14 @@ void printSize(long int size);
 
 int main(int argc, char * argv[]){
   printf("Note: \"Readable format\" truncates the bytes when converting\n\n");
-  DIR *d;
+  DIR * d;
   char name[256];
   if (argc == 1){
     name[0] = '\0';
     while (!name[0]){
       printf("Enter a directory name (max 254 chars)\n");
       fgets(name, 255, stdin);
-      printf("%s", name);
+      strncpy(name, name, strlen(name) - 1);
       d = opendir(name);
       if (errno){
         printf("Error: %d - %s\n", errno, strerror(errno));
@@ -37,6 +37,7 @@ int main(int argc, char * argv[]){
     while (!name[0]){
       printf("Enter a directory name (max 254 chars)\n");
       fgets(name, 255, stdin);
+      strncpy(name, name, strlen(name) - 1);
       d = opendir(name);
       if (errno){
         printf("Error: %d - %s\n", errno, strerror(errno));
