@@ -23,6 +23,7 @@ int main(int argc, char * argv[]){
       d = opendir(name);
       if (errno){
         printf("Error: %d - %s\n", errno, strerror(errno));
+        errno = 0;
         name[0] = '\0';
       }
     }
@@ -32,6 +33,7 @@ int main(int argc, char * argv[]){
     d = opendir(name);
     if (errno){
       printf("Error: %d - %s\n", errno, strerror(errno));
+      errno = 0;
       name[0] = '\0';
     }
     while (!name[0]){
@@ -41,6 +43,7 @@ int main(int argc, char * argv[]){
       d = opendir(name);
       if (errno){
         printf("Error: %d - %s\n", errno, strerror(errno));
+        errno = 0;
         name[0] = '\0';
       }
     }
