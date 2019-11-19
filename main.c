@@ -18,8 +18,8 @@ int main(int argc, char * argv[]){
     name[0] = '\0';
     while (!name[0]){
       printf("Enter a directory name (max 254 chars)\n");
-      fgets(name, 255, stdin);
-      name[strlen(name) - 1] = '\0';
+      fgets(name, sizeof(name) - 1, stdin);
+      if (name[strlen(name) - 1] == '\n') name[strlen(name) - 1] = '\0';
       d = opendir(name);
       if (errno){
         printf("Error: %d - %s\n", errno, strerror(errno));
@@ -36,8 +36,8 @@ int main(int argc, char * argv[]){
     }
     while (!name[0]){
       printf("Enter a directory name (max 254 chars)\n");
-      fgets(name, 255, stdin);
-      name[strlen(name) - 1] = '\0';
+      fgets(name, sizeof(name) - 1, stdin);
+      if (name[strlen(name) - 1] == '\n') name[strlen(name) - 1] = '\0';
       d = opendir(name);
       if (errno){
         printf("Error: %d - %s\n", errno, strerror(errno));
