@@ -64,6 +64,7 @@ long int dirFunc(DIR * d, char * path){
   long int tsize = 0;
   while (p){
     printf("Name: %-30s | ", p->d_name);
+    printf("Location: %-30s | ", path);
     if (p->d_type == 4) printf("Type: %-20s | ", "directory");
     else printf("Type: %-20s | ", "regular file");
     struct stat f;
