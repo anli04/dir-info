@@ -19,7 +19,7 @@ int main(int argc, char * argv[]){
     while (!name[0]){
       printf("Enter a directory name (max 254 chars)\n");
       fgets(name, 255, stdin);
-      strncpy(name, name, strlen(name) - 1);
+      name[strlen(name) - 1] = '\0';
       d = opendir(name);
       if (errno){
         printf("Error: %d - %s\n", errno, strerror(errno));
@@ -37,7 +37,7 @@ int main(int argc, char * argv[]){
     while (!name[0]){
       printf("Enter a directory name (max 254 chars)\n");
       fgets(name, 255, stdin);
-      strncpy(name, name, strlen(name) - 1);
+      name[strlen(name) - 1] = '\0';
       d = opendir(name);
       if (errno){
         printf("Error: %d - %s\n", errno, strerror(errno));
