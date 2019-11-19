@@ -10,13 +10,42 @@
 long int dirFunc(DIR * d, char * path);
 void printSize(long int size);
 
-int main(){
+int main(int argc, char * argv[]){
   printf("Note: \"Readable format\" truncates the bytes when converting\n\n");
-  printf("Statistics for directory \"Test\"\n");
-  DIR * d = opendir("Test");
-  if (errno) printf("Error: %d - %s\n", errno, strerror(errno));
-  char path[] = "Test/";
-  long int tsize = dirFunc(d, path);
+  DIR *d;
+  char name[256];
+  if (argc == 1){
+    name[0] = '\0';
+    while (!name[0]){
+      printf("Enter a directory name (max 254 chars)\n");
+      fgets(name, 255, stdin);
+      d = opendir(name);
+      if (errno){
+        printf("Error: %d - %s\n", errno, strerror(errno));
+        name[0] = '\0';
+      }
+    }
+  }
+  else {
+    strcpy(name, argv[1]);
+    d = opendir(name);
+    if (errno){
+      printf("Error: %d - %s\n", errno, strerror(errno));
+      name[0] = '\0';
+    }
+    while (!name[0]){
+      printf("Enter a directory name (max 254 chars)\n");
+      fgets(name, 255, stdin);
+      d = opendir(name);
+      if (errno){
+        printf("Error: %d - %s\n", errno, strerror(errno));
+        name[0] = '\0';
+      }
+    }
+  }
+  printf("Statistics for directory %s\n", name);
+  strcat(name, "/");
+  long int tsize = dirFunc(d, name);
   closedir(d);
   printf("\nTotal Size (not including directories): ");
   printSize(tsize);
@@ -29,7 +58,7 @@ long int dirFunc(DIR * d, char * path){
   if (errno) printf("Error: %d - %s\n", errno, strerror(errno));
   long int tsize = 0;
   while (p){
-    printf("Name: %-20s | ", p->d_name);
+    printf("Name: %-30s | ", p->d_name);
     if (p->d_type == 4) printf("Type: %-20s | ", "directory");
     else printf("Type: %-20s | ", "regular file");
     struct stat f;
